@@ -18,6 +18,15 @@ repositories {
 	mavenCentral()
 }
 
+tasks.named("bootBuildImage") {
+	imageName = "demo/${project.name}:${version}"
+	environment = [
+			"BP_JVM_VERSION" : "17",
+			"BPE_DELIM_JAVA_TOOL_OPTIONS" : " ",
+			"BPE_APPEND_JAVA_TOOL_OPTIONS" : "-XX:+HeapDumpOnOutOfMemoryError -XX:+UseStringDeduplication"
+	]
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
