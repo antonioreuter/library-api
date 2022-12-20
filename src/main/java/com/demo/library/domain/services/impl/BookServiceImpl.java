@@ -1,5 +1,6 @@
 package com.demo.library.domain.services.impl;
 
+import com.demo.library.domain.exceptions.ResourceNotFoundException;
 import com.demo.library.domain.models.Book;
 import com.demo.library.domain.repositories.BookRepository;
 import com.demo.library.domain.services.BookService;
@@ -19,8 +20,15 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Optional<Book> findById(String id) {
-		return this.bookRepository.findById(id);
+	public Book findById(String id) {
+
+		Optional<Book> optionalBook =  this.bookRepository.findById(id);
+
+		if (optionalBook.isEmpty()) {
+			throw new ResourceNotFoundException(String.format("Book [%s] not found.", id));
+		}
+
+		return optionalBook.get();
 	}
 
 	@Override
