@@ -1,12 +1,14 @@
 package com.demo.library.storage.database.entities;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
 import java.time.Instant;
+import java.util.Calendar;
 
 @Entity
 @Table(name="books")
@@ -15,11 +17,11 @@ import java.time.Instant;
 @NoArgsConstructor
 @Getter
 public class BookEntity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 
-	@Column(name="title")
+	@Column(name="title", unique = true)
 	private String title;
 
 	@Column(name="description")
@@ -27,7 +29,7 @@ public class BookEntity {
 
 	@Column(name="publishedAt")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Instant publishedAt;
+	private Calendar publishedAt;
 
 	@Column(name="numberOfPages")
 	private int numberOfPages;

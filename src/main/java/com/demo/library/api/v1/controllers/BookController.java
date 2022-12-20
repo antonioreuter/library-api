@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.demo.library.domain.models.Book;
 import com.demo.library.domain.services.BookService;
 
-@RequestMapping(value = "/books")
+@RequestMapping(value = "/api/v1/books")
 @RestController
 public class BookController {
 
@@ -18,7 +18,7 @@ public class BookController {
 		this.bookService = bookService;
 	}
 
-	@PostMapping(value="/")
+	@PostMapping()
 	public Book save(@RequestBody CreateBookDTO createBookDTO) {
 		Book book = createBookDTO.buildBook();
 
