@@ -1,0 +1,1 @@
+kubectl port-forward service/mysql :3306 -n mysql
