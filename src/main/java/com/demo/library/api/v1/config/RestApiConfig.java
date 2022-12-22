@@ -1,21 +1,16 @@
 package com.demo.library.api.v1.config;
 
 import com.atlassian.oai.validator.OpenApiInteractionValidator;
-import com.atlassian.oai.validator.report.JsonValidationReportFormat;
-import com.atlassian.oai.validator.report.SimpleValidationReportFormat;
-import com.atlassian.oai.validator.springmvc.*;
-import com.demo.library.storage.database.jpa.BookRepositoryJPA;
+import com.atlassian.oai.validator.springmvc.OpenApiValidationFilter;
+import com.atlassian.oai.validator.springmvc.OpenApiValidationInterceptor;
+import com.atlassian.oai.validator.springmvc.SpringMVCLevelResolverFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.EncodedResource;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.Filter;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 
 @Configuration
@@ -27,8 +22,6 @@ public class RestApiConfig implements WebMvcConfigurer{
 		return filter;
 	}
 
-
-
 	@Bean
 	public WebMvcConfigurer getOpenApiValidationInterceptor(@Value("schemas/api-v1.yaml") final String apiSpecUrl) {
 		final OpenApiInteractionValidator validator = OpenApiInteractionValidator
@@ -37,7 +30,6 @@ public class RestApiConfig implements WebMvcConfigurer{
 				.build();
 		final OpenApiValidationInterceptor openApiValidationInterceptor = new OpenApiValidationInterceptor(validator);
 
-
 		return new WebMvcConfigurer() {
 			@Override
 			public void addInterceptors(final InterceptorRegistry registry) {
@@ -45,6 +37,4 @@ public class RestApiConfig implements WebMvcConfigurer{
 			}
 		};
 	}
-
-
 }
