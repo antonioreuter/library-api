@@ -178,6 +178,7 @@ components:
           description: The book's title
           minLength: 3
           maxLength: 100
+          pattern: ^[a-zA-Z0-9 ]*$
         description:
           type: string
           description: The book's description
